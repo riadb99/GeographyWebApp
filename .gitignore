@@ -1,0 +1,6 @@
+# Project specific files
+node_modules/
+
+# IDE specific files
+.idea/**/workspace.xml
+.idea/**/tasks.xml
