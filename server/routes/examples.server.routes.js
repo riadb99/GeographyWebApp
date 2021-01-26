@@ -4,5 +4,7 @@ const examples = require('../controllers/examples.server.controller.js'),
 
 router.route('/')
   .get(examples.hello);
+
+router.post('/', examples.create);
   
 module.exports = router;
