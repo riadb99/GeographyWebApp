@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useAuth} from "../../contexts/AuthContext";
-import {useHistory} from "react-router-dom"
+import {useHistory } from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
 
 function Copyright() {
@@ -50,38 +50,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SignUp() {
+export default function Login() {
     const classes = useStyles();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const {signup, currentUser} = useAuth();
+    const {signup, currentUser, login} = useAuth();
 
     async function handleSubmit(e) {
         e.preventDefault()
 
-
-        if (password !== passwordConfirm) {
-            return setError("Passwords do not match")
-        }
-
         try {
             setError("")
             setLoading(true)
-            await signup(email, password)
+            await login(email, password)
             history.push("/Home")
-        } catch (e) {
-
-
-            if (e.code == "auth/email-already-in-use") {
-                setError("Email already in use")
-            } else {
-                setError("Failed to create an account")
-            }
+        } catch {
+            setError("Failed to sign in")
         }
+
         setLoading(false)
 
     }
@@ -94,7 +83,7 @@ export default function SignUp() {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Log in
                 </Typography>
                 {error && <Alert severity="error">{error}</Alert>}
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -124,25 +113,6 @@ export default function SignUp() {
                                 onChange={e => setPassword(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password-confirm"
-                                label="Confirm Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                onChange={e => setPasswordConfirm(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary"/>}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
-                            />
-                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -152,12 +122,12 @@ export default function SignUp() {
                         className={classes.submit}
                         disabled={loading}
                     >
-                        Sign Up
+                        Log In
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="/Login" variant="body2">
-                                Already have an account? Log in
+                            <Link href="/Signup" variant="body2">
+                                Need an account? Sign up
                             </Link>
                         </Grid>
                     </Grid>
