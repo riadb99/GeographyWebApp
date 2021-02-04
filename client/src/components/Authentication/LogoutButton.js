@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {useAuth} from "../../contexts/AuthContext";
-import {useHistory } from "react-router-dom"
+import {useHistory} from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,8 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LogoutButton() {
-    const classes = useStyles();
-    const {logout} = useAuth();
+    const {logout, isAuthenticated} = useAuth();
     const [error, setError] = useState("");
     const history = useHistory()
 
@@ -31,10 +30,11 @@ export default function LogoutButton() {
     }
 
     return (
-        <div className={classes.root}>
+        isAuthenticated() && (
             <Button variant="contained" color="secondary" onClick={() => handleLogout()}>
                 Log Out
             </Button>
-        </div>
+
+)
     );
 }
