@@ -131,6 +131,13 @@ export default function Login() {
                             </Link>
                         </Grid>
                     </Grid>
+                    <Grid container justify="flex-end">
+                        <Grid item>
+                            <Link href="/ForgotPassword" variant="body2">
+                                Forgot Password?
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </form>
             </div>
             <Box mt={5}>

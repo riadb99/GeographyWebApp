@@ -13,7 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useAuth} from "../../contexts/AuthContext";
-import {useHistory} from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
 
 function Copyright() {
@@ -50,44 +49,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function SignUp() {
+export default function ForgotPassword() {
     const classes = useStyles();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
+    const [email,setEmail] = useState("");
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    const history = useHistory();
-    const {signup, verifyEmail} = useAuth();
-    const delay = ms => new Promise(res => setTimeout(res, ms));
+    const {resetPassword} = useAuth();
 
     async function handleSubmit(e) {
         e.preventDefault()
-
-
-        if (password !== passwordConfirm) {
-            return setError("Passwords do not match")
-        }
 
         try {
             setError("")
             setMessage("")
             setLoading(true)
-            await signup(email, password)
-            await verifyEmail()
-            setMessage("An email verfication has been sent. You will be redirected in 5 seconds.")
-            await delay(5000)
-            history.push("/Home")
-        } catch (e) {
-
-
-            if (e.code == "auth/email-already-in-use") {
-                setError("Email already in use")
-            } else {
-                setError("Failed to create an account")
+            await resetPassword(email)
+            setMessage("Password reset link has been sent to your email.")
+        } catch(e) {
+            if(e.code == "auth/invalid-email"){
+                setError("Email not found. Please sign up first.")
+            }
+            else {
+                setError("Failed to reset password.")
             }
         }
+
         setLoading(false)
 
     }
@@ -100,7 +87,7 @@ export default function SignUp() {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Password Reset
                 </Typography>
                 {error && <Alert severity="error">{error}</Alert>}
                 {message && <Alert severity="info">{message}</Alert>}
@@ -118,38 +105,6 @@ export default function SignUp() {
                                 onChange={e => setEmail(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password-confirm"
-                                label="Confirm Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                onChange={e => setPasswordConfirm(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary"/>}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
-                            />
-                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -159,12 +114,12 @@ export default function SignUp() {
                         className={classes.submit}
                         disabled={loading}
                     >
-                        Sign Up
+                        Reset Password
                     </Button>
-                    <Grid container justify="flex-end">
+                    <Grid container justify="center">
                         <Grid item>
                             <Link href="/Login" variant="body2">
-                                Already have an account? Log in
+                                Log in
                             </Link>
                         </Grid>
                     </Grid>
