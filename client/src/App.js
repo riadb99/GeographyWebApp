@@ -5,6 +5,7 @@ import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
 import SignUp from "./components/Authentication/Signup";
 import Login from "./components/Authentication/Login";
+import ForgotPassword from "./components/Authentication/ForgotPassword";
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
                 <Route exact path="/Home" component={Home}/>
                 <Route exact path="/Signup" component={SignUp}/>
                 <Route exact path="/Login" component={Login}/>
+                <Route exact path="/ForgotPassword" component={ForgotPassword}/>
                 <Route exact path="/">
                     <Redirect to="/Home"/>
                 </Route>
