@@ -14,6 +14,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useAuth} from "../../contexts/AuthContext";
 import Alert from '@material-ui/lab/Alert';
+import Grow from '@material-ui/core/Grow';
 
 function Copyright() {
     return (
@@ -51,11 +52,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ForgotPassword() {
     const classes = useStyles();
-    const [email,setEmail] = useState("");
+    const [email, setEmail] = useState("");
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const {resetPassword} = useAuth();
+    const [animate, setAnimate] = useState(true);
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -66,11 +68,10 @@ export default function ForgotPassword() {
             setLoading(true)
             await resetPassword(email)
             setMessage("Password reset link has been sent to your email.")
-        } catch(e) {
-            if(e.code == "auth/invalid-email"){
+        } catch (e) {
+            if (e.code == "auth/invalid-email") {
                 setError("Email not found. Please sign up first.")
-            }
-            else {
+            } else {
                 setError("Failed to reset password.")
             }
         }
@@ -82,49 +83,55 @@ export default function ForgotPassword() {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Password Reset
-                </Typography>
-                {error && <Alert severity="error">{error}</Alert>}
-                {message && <Alert severity="info">{message}</Alert>}
-                <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                onChange={e => setEmail(e.target.value)}
-                            />
+            <Grow
+                in={animate}
+                style={{transformOrigin: '0 0 0'}}
+                {...(animate ? {timeout: 1000} : {})}
+            >
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Password Reset
+                    </Typography>
+                    {error && <Alert severity="error">{error}</Alert>}
+                    {message && <Alert severity="info">{message}</Alert>}
+                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    onChange={e => setEmail(e.target.value)}
+                                />
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        disabled={loading}
-                    >
-                        Reset Password
-                    </Button>
-                    <Grid container justify="center">
-                        <Grid item>
-                            <Link href="/Login" variant="body2">
-                                Log in
-                            </Link>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            disabled={loading}
+                        >
+                            Reset Password
+                        </Button>
+                        <Grid container justify="center">
+                            <Grid item>
+                                <Link href="/Login" variant="body2">
+                                    Log in
+                                </Link>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </form>
-            </div>
+                    </form>
+                </div>
+            </Grow>
             <Box mt={5}>
                 <Copyright/>
             </Box>

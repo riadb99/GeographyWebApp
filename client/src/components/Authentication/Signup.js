@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import {useAuth} from "../../contexts/AuthContext";
 import {useHistory} from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
+import Grow from '@material-ui/core/Grow';
 
 function Copyright() {
     return (
@@ -60,6 +61,7 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const {signup, verifyEmail} = useAuth();
+    const [animate, setAnimate] = useState(true);
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     async function handleSubmit(e) {
@@ -95,81 +97,87 @@ export default function SignUp() {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign up
-                </Typography>
-                {error && <Alert severity="error">{error}</Alert>}
-                {message && <Alert severity="info">{message}</Alert>}
-                <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                onChange={e => setEmail(e.target.value)}
-                            />
+            <Grow
+                in={animate}
+                style={{transformOrigin: '0 0 0'}}
+                {...(animate ? {timeout: 1000} : {})}
+            >
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Sign up
+                    </Typography>
+                    {error && <Alert severity="error">{error}</Alert>}
+                    {message && <Alert severity="info">{message}</Alert>}
+                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    onChange={e => setEmail(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="password-confirm"
+                                    label="Confirm Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    onChange={e => setPasswordConfirm(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControlLabel
+                                    control={<Checkbox value="allowExtraEmails" color="primary"/>}
+                                    label="I want to receive inspiration, marketing promotions and updates via email."
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                onChange={e => setPassword(e.target.value)}
-                            />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                            disabled={loading}
+                        >
+                            Sign Up
+                        </Button>
+                        <Grid container justify="flex-end">
+                            <Grid item>
+                                <Link href="/Login" variant="body2">
+                                    Already have an account? Log in
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password-confirm"
-                                label="Confirm Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                onChange={e => setPasswordConfirm(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary"/>}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                        disabled={loading}
-                    >
-                        Sign Up
-                    </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Link href="/Login" variant="body2">
-                                Already have an account? Log in
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
+                    </form>
+                </div>
+            </Grow>
             <Box mt={5}>
                 <Copyright/>
             </Box>
