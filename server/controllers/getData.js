@@ -2,15 +2,10 @@ const fetch = require('node-fetch');
 
 exports.getData  = function(req, res) {
 
-    res.send("test");
-
-    const search = req.params.country;
-    //console.log("Step 1");
-
+    const search = req.params.name;
     async function getInfo() {
         let response = await fetch('https://restcountries.eu/rest/v2/name/'+search);
         let data = await response.json();
-        //console.log("Step 2");
         return data;
     }
 
