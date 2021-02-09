@@ -3,7 +3,9 @@ const path = require('path'),
     mongoose = require('mongoose'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
+    dataRouter = require('../routes/dataRoute'),
     exampleRouter = require('../routes/examples.server.routes');
+
 
 module.exports.init = () => {
     /* 
@@ -25,8 +27,10 @@ module.exports.init = () => {
 
     // body parsing middleware
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     // add a router
+    app.use('/api/country', dataRouter);
     app.use('/api/example', exampleRouter);
 
     if (process.env.NODE_ENV === 'production') {

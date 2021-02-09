@@ -3,7 +3,7 @@ const examples = require('../controllers/examples.server.controller.js'),
     router = express.Router()
 
 router.route('/')
-  .get(examples.hello);
+  .get(examples.hello );
 
 router.post('/', examples.create);
   
