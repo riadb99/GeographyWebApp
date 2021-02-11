@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import {Route, Switch, Redirect} from 'react-router-dom';
 import Home from "./views/Home/Home";
 import NotFound from "./views/NotFound";

@@ -26,8 +26,7 @@ import LogoutButton from '../Authentication/LogoutButton';
 import Links from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
 import LoginButton from "../Authentication/LoginButton";
-
-
+import {useAuth} from "../../contexts/AuthContext";
 
 
 const useStyles = makeStyles(theme => ({
@@ -70,7 +69,7 @@ export default function ButtonAppBar() {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [view, setView] = useState(0);
     const [updated, setUpdated] = useState(0);
-
+    const {currentUser} = useAuth();
 
 
     const classes = useStyles();
@@ -86,7 +85,8 @@ export default function ButtonAppBar() {
                         <Typography variant="h6" className={classes.title} >
                             GEOGRAPHY APP
                         </Typography>
-
+                        {currentUser && currentUser.email}
+                        &nbsp;
                         <LoginButton />
                         <LogoutButton />
 
