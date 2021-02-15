@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useMemo} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,6 +16,8 @@ import {useAuth} from "../../contexts/AuthContext";
 import {useHistory} from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
 import Grow from '@material-ui/core/Grow';
+import countryList from 'react-select-country-list'
+import Select from 'react-select';
 
 function Copyright() {
     return (
@@ -50,9 +52,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const dropDownStyles = {
+    menu: base => ({
+        ...base,
+        zIndex: 100
+    })
+};
+
 
 export default function SignUp() {
     const classes = useStyles();
+    const [fistName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [value, setValue] = useState("");
+    const options = useMemo(() => countryList().getData(), [])
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -66,8 +79,7 @@ export default function SignUp() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-
-
+        console.log(value)
         if (password !== passwordConfirm) {
             return setError("Passwords do not match")
         }
@@ -94,6 +106,10 @@ export default function SignUp() {
 
     }
 
+    const countryChangeHandler = value => {
+        setValue(value)
+    }
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
@@ -113,6 +129,34 @@ export default function SignUp() {
                     {message && <Alert severity="info">{message}</Alert>}
                     <form className={classes.form} noValidate onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    autoComplete="fname"
+                                    name="firstName"
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="firstName"
+                                    label="First Name"
+                                    autoFocus
+                                    onChange={e => setFirstName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="lastName"
+                                    label="Last Name"
+                                    name="lastName"
+                                    autoComplete="lname"
+                                    onChange={e => setLastName(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Select options={options} styles={dropDownStyles} value={value} onChange={countryChangeHandler} />
+                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     variant="outlined"
