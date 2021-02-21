@@ -18,6 +18,7 @@ import Alert from '@material-ui/lab/Alert';
 import Grow from '@material-ui/core/Grow';
 import countryList from 'react-select-country-list'
 import Select from 'react-select';
+import axios from 'axios';
 
 function Copyright() {
     return (
@@ -62,7 +63,7 @@ const dropDownStyles = {
 
 export default function SignUp() {
     const classes = useStyles();
-    const [fistName, setFirstName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [value, setValue] = useState("");
     const options = useMemo(() => countryList().getData(), [])
@@ -91,6 +92,23 @@ export default function SignUp() {
             await signup(email, password)
             await verifyEmail()
             setMessage("An email verfication has been sent. You will be redirected in 5 seconds.")
+
+
+            axios.post('/api/user', {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                country: value.label.toString(),
+                rank: null,
+                highscore: null
+            })
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
             await delay(5000)
             history.push("/Home")
         } catch (e) {
