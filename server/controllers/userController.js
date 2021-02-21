@@ -28,7 +28,6 @@ exports.getUserByEmail = async function (req, res) {
 }
 
 exports.deleteUserByEmail = async function (req, res) {
-    console.log("HI")
     User.findOneAndDelete({ email: req.params.email }, function (err) {
         if(err) res.status(404).json("Error: " + err)
         res.status(200).json("Successful Deletion")
