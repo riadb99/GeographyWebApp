@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,27 +6,21 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import ScheduleIcon from '@material-ui/icons/Schedule';
 import Drawer from '@material-ui/core/Drawer';
-import Tab from '@material-ui/core/Tab';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
-import { Button, CssBaseline, ListItemText, ClickAwayListener } from '@material-ui/core';
+import { ListItemText } from '@material-ui/core';
 import LogoutButton from '../Authentication/LogoutButton';
-
-
-import Links from '@material-ui/core/Link';
-import { Link } from 'react-router-dom';
 import LoginButton from "../Authentication/LoginButton";
 import {useAuth} from "../../contexts/AuthContext";
 import axios from 'axios';
 import RenderFlag from '../FlagRenderer';
+import PersonIcon from '@material-ui/icons/Person';
+import './NavBar.css'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -77,6 +69,7 @@ export default function ButtonAppBar() {
 
     const classes = useStyles();
 
+
     useEffect(() => {
 
         var country = '';
@@ -84,7 +77,7 @@ export default function ButtonAppBar() {
         if(currentUser){
             axios.get('/api/user/' + currentUser.email)
                 .then(function(response){
-                    setCurrentUserName(response.data[0].firstName + ' ' + response.data[0].lastName )
+                    setCurrentUserName(response.data[0].firstName + ' ' + response.data[0].lastName)
                     country = response.data[0].country
                 })
                 .then(() => {
@@ -93,6 +86,7 @@ export default function ButtonAppBar() {
                             setCurrentUserCountryCode(response2.data[0].alpha2Code.toLowerCase())
                         })
                 })
+
         }else{
             setCurrentUserName('')
             setCurrentUserCountryCode('')
@@ -110,7 +104,9 @@ export default function ButtonAppBar() {
                         <Typography variant="h6" className={classes.title} >
                             GEOGRAPHY APP
                         </Typography>
+                        <PersonIcon />
                         {currentUserName}
+                        &nbsp;
                         <RenderFlag code={currentUserCountryCode} />
                         &nbsp;
                         <LoginButton />

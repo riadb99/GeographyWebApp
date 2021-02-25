@@ -6,6 +6,6 @@ export default function FlagRenderer(props) {
     if(props.code === ''){
         return null;
     }else{
-        return <div><FlagIcon code={props.code} size='3x' /></div>
+        return <div><FlagIcon code={props.code} size='1x' /></div>
     }
 }
