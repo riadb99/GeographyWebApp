@@ -117,6 +117,7 @@ export default function SignUp() {
             if (e.code == "auth/email-already-in-use") {
                 setError("Email already in use")
             } else {
+                console.log(e)
                 setError("Failed to create an account")
             }
         }

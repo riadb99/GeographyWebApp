@@ -27,7 +27,8 @@ import Links from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
 import LoginButton from "../Authentication/LoginButton";
 import {useAuth} from "../../contexts/AuthContext";
-
+import axios from 'axios';
+import RenderFlag from '../FlagRenderer';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -70,9 +71,33 @@ export default function ButtonAppBar() {
     const [view, setView] = useState(0);
     const [updated, setUpdated] = useState(0);
     const {currentUser} = useAuth();
+    const [currentUserName, setCurrentUserName] = useState('');
+    const [currentUserCountryCode, setCurrentUserCountryCode] = useState('');
 
 
     const classes = useStyles();
+
+    useEffect(() => {
+
+        var country = '';
+
+        if(currentUser){
+            axios.get('/api/user/' + currentUser.email)
+                .then(function(response){
+                    setCurrentUserName(response.data[0].firstName + ' ' + response.data[0].lastName )
+                    country = response.data[0].country
+                })
+                .then(() => {
+                    axios.get('https://restcountries.eu/rest/v2/name/' + country)
+                        .then(function(response2){
+                            setCurrentUserCountryCode(response2.data[0].alpha2Code.toLowerCase())
+                        })
+                })
+        }else{
+            setCurrentUserName('')
+            setCurrentUserCountryCode('')
+        }
+    }, [currentUser]);
 
     return (
         <MuiThemeProvider theme={theme}>
@@ -85,7 +110,8 @@ export default function ButtonAppBar() {
                         <Typography variant="h6" className={classes.title} >
                             GEOGRAPHY APP
                         </Typography>
-                        {currentUser && currentUser.email}
+                        {currentUserName}
+                        <RenderFlag code={currentUserCountryCode} />
                         &nbsp;
                         <LoginButton />
                         <LogoutButton />
