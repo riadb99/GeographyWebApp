@@ -16,13 +16,14 @@ import {useAuth} from "../../contexts/AuthContext";
 import {useHistory} from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
 import Grow from '@material-ui/core/Grow';
+import ParticlesBg from 'particles-bg'
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                GeographyWebApp
+                Azure Marble
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -78,80 +79,85 @@ export default function Login() {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <Grow
-                in={animate}
-                style={{ transformOrigin: '0 0 0' }}
-                {...(animate ? { timeout: 1000 } : {})}
-            >
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Log in
-                    </Typography>
-                    {error && <Alert severity="error">{error}</Alert>}
-                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
+        <div>
+            <div>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline/>
+                    <Grow
+                        in={animate}
+                        style={{transformOrigin: '0 0 0'}}
+                        {...(animate ? {timeout: 1000} : {})}
+                    >
+                        <div className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <LockOutlinedIcon/>
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Log in
+                            </Typography>
+                            {error && <Alert severity="error">{error}</Alert>}
+                            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            id="email"
+                                            label="Email Address"
+                                            name="email"
+                                            autoComplete="email"
+                                            onChange={e => setEmail(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="current-password"
+                                            onChange={e => setPassword(e.target.value)}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Button
+                                    type="submit"
                                     fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    onChange={e => setPassword(e.target.value)}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disabled={loading}
-                        >
-                            Log In
-                        </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link href="/Signup" variant="body2">
-                                    Need an account? Sign up
-                                </Link>
-                            </Grid>
-                        </Grid>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link href="/ForgotPassword" variant="body2">
-                                    Forgot Password?
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                    disabled={loading}
+                                >
+                                    Log In
+                                </Button>
+                                <Grid container justify="flex-end">
+                                    <Grid item>
+                                        <Link href="/Signup" variant="body2">
+                                            Need an account? Sign up
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                                <Grid container justify="flex-end">
+                                    <Grid item>
+                                        <Link href="/ForgotPassword" variant="body2">
+                                            Forgot Password?
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </form>
 
-                </div>
-            </Grow>
-            <Box mt={5}>
-                <Copyright/>
-            </Box>
-        </Container>
+                        </div>
+                    </Grow>
+                    <Box mt={5}>
+                        <Copyright/>
+                    </Box>
+                </Container>
+            </div>
+            <ParticlesBg type="tadpole" bg={true}/>
+        </div>
     );
 }

@@ -65,32 +65,35 @@ export default function ButtonAppBar() {
     const {currentUser} = useAuth();
     const [currentUserName, setCurrentUserName] = useState('');
     const [currentUserCountryCode, setCurrentUserCountryCode] = useState('');
-
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const classes = useStyles();
 
 
     useEffect(() => {
-
-        var country = '';
-
-        if(currentUser){
-            axios.get('/api/user/' + currentUser.email)
-                .then(function(response){
-                    setCurrentUserName(response.data[0].firstName + ' ' + response.data[0].lastName)
-                    country = response.data[0].country
-                })
-                .then(() => {
-                    axios.get('https://restcountries.eu/rest/v2/name/' + country)
-                        .then(function(response2){
-                            setCurrentUserCountryCode(response2.data[0].alpha2Code.toLowerCase())
-                        })
-                })
-
-        }else{
-            setCurrentUserName('')
-            setCurrentUserCountryCode('')
+        async function renderUserInfo(){
+            await delay(1500)
+            var country = '';
+            if(currentUser){
+                axios.get('/api/user/' + currentUser.email)
+                    .then(function(response){
+                        setCurrentUserName(response.data[0].firstName + ' ' + response.data[0].lastName)
+                        country = response.data[0].country
+                    })
+                    .then(() => {
+                        axios.get('https://restcountries.eu/rest/v2/name/' + country)
+                            .then(function(response2){
+                                setCurrentUserCountryCode(response2.data[0].alpha2Code.toLowerCase())
+                            })
+                    })
+            }else{
+                setCurrentUserName('')
+                setCurrentUserCountryCode('')
+            }
         }
+
+        renderUserInfo()
+
     }, [currentUser]);
 
     return (
@@ -102,7 +105,7 @@ export default function ButtonAppBar() {
                             <MenuIcon />
                         </IconButton>
                         <Typography variant="h6" className={classes.title} >
-                            GEOGRAPHY APP
+                            Azure Marble
                         </Typography>
                         <PersonIcon />
                         {currentUserName}
@@ -124,7 +127,7 @@ export default function ButtonAppBar() {
                     <List>
                         <ListItem button onClick={() => setView(0)} key={"patient"}>
                             <ListItemIcon><HomeIcon/></ListItemIcon>
-                            <ListItemText primary="Home"/>
+                            <ListItemText primary="Home" />
                         </ListItem>
                         <ListItem button onClick={() => setView(2)} key={"add-patient"}>
                             <ListItemIcon><PersonAddIcon /></ListItemIcon>

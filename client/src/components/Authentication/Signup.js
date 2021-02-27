@@ -19,13 +19,14 @@ import Grow from '@material-ui/core/Grow';
 import countryList from 'react-select-country-list'
 import Select from 'react-select';
 import axios from 'axios';
+import ParticlesBg from 'particles-bg'
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                GeographyWebApp
+                Azure Marble
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -106,10 +107,10 @@ export default function SignUp() {
                     console.log(response);
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    throw error;
                 });
 
-            await delay(5000)
+            await delay(2000)
             history.push("/Home")
         } catch (e) {
 
@@ -130,120 +131,126 @@ export default function SignUp() {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <Grow
-                in={animate}
-                style={{transformOrigin: '0 0 0'}}
-                {...(animate ? {timeout: 1000} : {})}
-            >
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign up
-                    </Typography>
-                    {error && <Alert severity="error">{error}</Alert>}
-                    {message && <Alert severity="info">{message}</Alert>}
-                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    autoComplete="fname"
-                                    name="firstName"
-                                    variant="outlined"
-                                    required
+        <div>
+            <div>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline/>
+                    <Grow
+                        in={animate}
+                        style={{transformOrigin: '0 0 0'}}
+                        {...(animate ? {timeout: 1000} : {})}
+                    >
+                        <div className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <LockOutlinedIcon/>
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Sign up
+                            </Typography>
+                            {error && <Alert severity="error">{error}</Alert>}
+                            {message && <Alert severity="info">{message}</Alert>}
+                            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            autoComplete="fname"
+                                            name="firstName"
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            id="firstName"
+                                            label="First Name"
+                                            autoFocus
+                                            onChange={e => setFirstName(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            id="lastName"
+                                            label="Last Name"
+                                            name="lastName"
+                                            autoComplete="lname"
+                                            onChange={e => setLastName(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Select options={options} styles={dropDownStyles} value={value}
+                                                onChange={countryChangeHandler}/>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            id="email"
+                                            label="Email Address"
+                                            name="email"
+                                            autoComplete="email"
+                                            onChange={e => setEmail(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            name="password"
+                                            label="Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="current-password"
+                                            onChange={e => setPassword(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            name="password-confirm"
+                                            label="Confirm Password"
+                                            type="password"
+                                            id="password"
+                                            autoComplete="current-password"
+                                            onChange={e => setPasswordConfirm(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <FormControlLabel
+                                            control={<Checkbox value="allowExtraEmails" color="primary"/>}
+                                            label="I want to receive inspiration, marketing promotions and updates via email."
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Button
+                                    type="submit"
                                     fullWidth
-                                    id="firstName"
-                                    label="First Name"
-                                    autoFocus
-                                    onChange={e => setFirstName(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="lname"
-                                    onChange={e => setLastName(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Select options={options} styles={dropDownStyles} value={value} onChange={countryChangeHandler} />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    onChange={e => setPassword(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password-confirm"
-                                    label="Confirm Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                    onChange={e => setPasswordConfirm(e.target.value)}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value="allowExtraEmails" color="primary"/>}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disabled={loading}
-                        >
-                            Sign Up
-                        </Button>
-                        <Grid container justify="flex-end">
-                            <Grid item>
-                                <Link href="/Login" variant="body2">
-                                    Already have an account? Log in
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </div>
-            </Grow>
-            <Box mt={5}>
-                <Copyright/>
-            </Box>
-        </Container>
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                    disabled={loading}
+                                >
+                                    Sign Up
+                                </Button>
+                                <Grid container justify="flex-end">
+                                    <Grid item>
+                                        <Link href="/Login" variant="body2">
+                                            Already have an account? Log in
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                        </div>
+                    </Grow>
+                    <Box mt={5}>
+                        <Copyright/>
+                    </Box>
+                </Container>
+            </div>
+            <ParticlesBg type="tadpole" bg={true}/>
+        </div>
     );
 }

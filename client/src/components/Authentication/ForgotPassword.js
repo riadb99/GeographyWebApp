@@ -15,13 +15,14 @@ import Container from '@material-ui/core/Container';
 import {useAuth} from "../../contexts/AuthContext";
 import Alert from '@material-ui/lab/Alert';
 import Grow from '@material-ui/core/Grow';
+import ParticlesBg from 'particles-bg'
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                GeographyWebApp
+                Azure Marble
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -31,7 +32,7 @@ function Copyright() {
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(20),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -81,60 +82,65 @@ export default function ForgotPassword() {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <Grow
-                in={animate}
-                style={{transformOrigin: '0 0 0'}}
-                {...(animate ? {timeout: 1000} : {})}
-            >
-                <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Password Reset
-                    </Typography>
-                    {error && <Alert severity="error">{error}</Alert>}
-                    {message && <Alert severity="info">{message}</Alert>}
-                    <form className={classes.form} noValidate onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
+        <div>
+            <div>
+                <Container component="main" maxWidth="xs">
+                    <CssBaseline/>
+                    <Grow
+                        in={animate}
+                        style={{transformOrigin: '0 0 0'}}
+                        {...(animate ? {timeout: 1000} : {})}
+                    >
+                        <div className={classes.paper}>
+                            <Avatar className={classes.avatar}>
+                                <LockOutlinedIcon/>
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Password Reset
+                            </Typography>
+                            {error && <Alert severity="error">{error}</Alert>}
+                            {message && <Alert severity="info">{message}</Alert>}
+                            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <TextField
+                                            variant="outlined"
+                                            required
+                                            fullWidth
+                                            id="email"
+                                            label="Email Address"
+                                            name="email"
+                                            autoComplete="email"
+                                            onChange={e => setEmail(e.target.value)}
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Button
+                                    type="submit"
                                     fullWidth
-                                    id="email"
-                                    label="Email Address"
-                                    name="email"
-                                    autoComplete="email"
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                            disabled={loading}
-                        >
-                            Reset Password
-                        </Button>
-                        <Grid container justify="center">
-                            <Grid item>
-                                <Link href="/Login" variant="body2">
-                                    Log in
-                                </Link>
-                            </Grid>
-                        </Grid>
-                    </form>
-                </div>
-            </Grow>
-            <Box mt={5}>
-                <Copyright/>
-            </Box>
-        </Container>
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.submit}
+                                    disabled={loading}
+                                >
+                                    Reset Password
+                                </Button>
+                                <Grid container justify="center">
+                                    <Grid item>
+                                        <Link href="/Login" variant="body2">
+                                            Log in
+                                        </Link>
+                                    </Grid>
+                                </Grid>
+                            </form>
+                        </div>
+                    </Grow>
+                    <Box mt={5}>
+                        <Copyright/>
+                    </Box>
+                </Container>
+            </div>
+            <ParticlesBg type="tadpole" bg={true}/>
+        </div>
     );
 }
