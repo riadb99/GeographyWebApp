@@ -17,6 +17,8 @@ import {useHistory} from "react-router-dom"
 import Alert from '@material-ui/lab/Alert';
 import Grow from '@material-ui/core/Grow';
 import ParticlesBg from 'particles-bg'
+import Switch from "@material-ui/core/Switch";
+import BgToggle from "../BgToggle";
 
 function Copyright() {
     return (
@@ -61,6 +63,7 @@ export default function Login() {
     const history = useHistory();
     const {login} = useAuth();
     const [animate, setAnimate] = useState(true);
+    const [bgToggle, setBgToggle] = useState(false)
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -89,6 +92,16 @@ export default function Login() {
                         {...(animate ? {timeout: 1000} : {})}
                     >
                         <div className={classes.paper}>
+                            <Switch
+                                checked={bgToggle}
+                                onChange={e => {
+                                    setBgToggle(e.target.checked)
+                                    console.log(bgToggle)
+                                }}
+                                name="Disable Animated Background"
+                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                            Disable Animated Background
                             <Avatar className={classes.avatar}>
                                 <LockOutlinedIcon/>
                             </Avatar>
@@ -157,7 +170,7 @@ export default function Login() {
                     </Box>
                 </Container>
             </div>
-            <ParticlesBg type="tadpole" bg={true}/>
+            <BgToggle toggle={bgToggle}/>
         </div>
     );
 }

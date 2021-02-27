@@ -2,7 +2,6 @@ import React from 'react';
 import FlagIcon from './FlagIcon';
 
 export default function FlagRenderer(props) {
-    console.log(props.code)
     if(props.code === ''){
         return null;
     }else{

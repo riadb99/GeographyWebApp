@@ -20,6 +20,8 @@ import countryList from 'react-select-country-list'
 import Select from 'react-select';
 import axios from 'axios';
 import ParticlesBg from 'particles-bg'
+import Switch from "@material-ui/core/Switch";
+import BgToggle from "../BgToggle";
 
 function Copyright() {
     return (
@@ -77,6 +79,7 @@ export default function SignUp() {
     const history = useHistory();
     const {signup, verifyEmail} = useAuth();
     const [animate, setAnimate] = useState(true);
+    const [bgToggle, setBgToggle] = useState(false)
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     async function handleSubmit(e) {
@@ -141,6 +144,16 @@ export default function SignUp() {
                         {...(animate ? {timeout: 1000} : {})}
                     >
                         <div className={classes.paper}>
+                            <Switch
+                                checked={bgToggle}
+                                onChange={e => {
+                                    setBgToggle(e.target.checked)
+                                    console.log(bgToggle)
+                                }}
+                                name="Disable Animated Background"
+                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                            Disable Animated Background
                             <Avatar className={classes.avatar}>
                                 <LockOutlinedIcon/>
                             </Avatar>
@@ -250,7 +263,7 @@ export default function SignUp() {
                     </Box>
                 </Container>
             </div>
-            <ParticlesBg type="tadpole" bg={true}/>
+            <BgToggle toggle={bgToggle}/>
         </div>
     );
 }

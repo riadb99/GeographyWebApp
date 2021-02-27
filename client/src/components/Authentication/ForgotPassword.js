@@ -16,6 +16,8 @@ import {useAuth} from "../../contexts/AuthContext";
 import Alert from '@material-ui/lab/Alert';
 import Grow from '@material-ui/core/Grow';
 import ParticlesBg from 'particles-bg'
+import Switch from "@material-ui/core/Switch";
+import BgToggle from "../BgToggle";
 
 function Copyright() {
     return (
@@ -59,6 +61,7 @@ export default function ForgotPassword() {
     const [loading, setLoading] = useState(false);
     const {resetPassword} = useAuth();
     const [animate, setAnimate] = useState(true);
+    const [bgToggle, setBgToggle] = useState(false)
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -92,6 +95,16 @@ export default function ForgotPassword() {
                         {...(animate ? {timeout: 1000} : {})}
                     >
                         <div className={classes.paper}>
+                            <Switch
+                                checked={bgToggle}
+                                onChange={e => {
+                                    setBgToggle(e.target.checked)
+                                    console.log(bgToggle)
+                                }}
+                                name="Disable Animated Background"
+                                inputProps={{'aria-label': 'secondary checkbox'}}
+                            />
+                            Disable Animated Background
                             <Avatar className={classes.avatar}>
                                 <LockOutlinedIcon/>
                             </Avatar>
@@ -140,7 +153,7 @@ export default function ForgotPassword() {
                     </Box>
                 </Container>
             </div>
-            <ParticlesBg type="tadpole" bg={true}/>
+            <BgToggle toggle={bgToggle}/>
         </div>
     );
 }
