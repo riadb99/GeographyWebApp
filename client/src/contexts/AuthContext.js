@@ -1,5 +1,6 @@
 import React, {useContext, useState, useEffect} from "react"
-import {auth} from "../firebase"
+import {auth} from '../firebase';
+import firebase from "firebase/app";
 
 const AuthContext = React.createContext()
 
@@ -12,7 +13,16 @@ export function AuthProvider({children}) {
     const [loading, setLoading] = useState(true)
 
     function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password)
+        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+            .then(() => {
+                return auth.createUserWithEmailAndPassword(email, password);
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorCode + ": " + errorMessage)
+            });
     }
 
     function verifyEmail() {
@@ -20,22 +30,16 @@ export function AuthProvider({children}) {
     }
 
     function login(email, password) {
-        /*auth.setPersistence(auth.Auth.Persistence.SESSION)
+        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
             .then(() => {
-                // Existing and future Auth states are now persisted in the current
-                // session only. Closing the window would clear any existing state even
-                // if a user forgets to sign out.
-                // ...
-                // New sign-in will be persisted with session persistence.
                 return auth.signInWithEmailAndPassword(email, password);
             })
             .catch((error) => {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-            });*/
-
-        return auth.signInWithEmailAndPassword(email, password);
+                console.log(errorCode + ": " + errorMessage)
+            });
     }
 
     function logout() {
