@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
-import { ListItemText } from '@material-ui/core';
+import { ListItemText, CircularProgress } from '@material-ui/core';
 import LogoutButton from '../Authentication/LogoutButton';
 import LoginButton from "../Authentication/LoginButton";
 import {useAuth} from "../../contexts/AuthContext";
@@ -21,6 +21,7 @@ import axios from 'axios';
 import RenderFlag from '../FlagRenderer';
 import PersonIcon from '@material-ui/icons/Person';
 import './NavBar.css'
+import CircularProgressRenderer from '../CircularProgressRenderer';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -65,6 +66,7 @@ export default function ButtonAppBar() {
     const {currentUser} = useAuth();
     const [currentUserName, setCurrentUserName] = useState('');
     const [currentUserCountryCode, setCurrentUserCountryCode] = useState('');
+    const [loading, setLoading] = useState(false);
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const classes = useStyles();
@@ -72,7 +74,9 @@ export default function ButtonAppBar() {
 
     useEffect(() => {
         async function renderUserInfo(){
+            setLoading(true);
             await delay(1500)
+            setLoading(false);
             var country = '';
             if(currentUser){
                 axios.get('/api/user/' + currentUser.email)
@@ -108,6 +112,7 @@ export default function ButtonAppBar() {
                             Azure Marble
                         </Typography>
                         <PersonIcon />
+                        <CircularProgressRenderer loading={loading} />
                         {currentUserName}
                         &nbsp;
                         <RenderFlag code={currentUserCountryCode} />
