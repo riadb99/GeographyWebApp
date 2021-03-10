@@ -4,7 +4,7 @@ const User = require('../models/User.js')
 exports.createUser = async function (req, res) {
     try {
         const example = await User.create(req.body);
-        res.json({success: true, message: "success"});
+        res.json({success: true, message: "success", user: example});
     } catch (err) {
         res.json({success: false, code: err.code});
     }
