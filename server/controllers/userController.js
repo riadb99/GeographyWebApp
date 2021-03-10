@@ -28,8 +28,12 @@ exports.getUserByEmail = async function (req, res) {
 }
 
 exports.deleteUserByEmail = async function (req, res) {
+    var tempUser = await User.find({email: req.params.email})
+    if (tempUser === null) res.status(404).json({success: false, message: "User Not Found"});
+
     User.findOneAndDelete({ email: req.params.email }, function (err) {
         if(err) res.status(404).json("Error: " + err)
-        res.status(200).json("Successful Deletion")
+        else
+            res.json({success: true, message: "success", user: tempUser});
     });
 }
