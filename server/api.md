@@ -393,7 +393,7 @@ Returns json data about all users
 
 * **Error Response:**
 
-    * **Code:** 200 <br />
+    * **Code:** 400 <br />
       **Content:**
       ```
       {
