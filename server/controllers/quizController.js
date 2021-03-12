@@ -30,10 +30,12 @@ Returns custom questions specified by the request parameters
  */
 exports.getCustomQuiz  = function(req, res) {
 
+    var count = req.params.count
+    var type = req.params.type
+    var difficulty = req.params.difficulty
+
     async function getInfo() {
-        var count = req.params.count
-        var type = req.params.type
-        var difficulty = req.params.difficulty
+
 
         if(type === 'boolean' && req.params.difficulty === 'hard'){
             difficulty = 'medium'
@@ -50,7 +52,7 @@ exports.getCustomQuiz  = function(req, res) {
             let error_obj = {message : "Quiz Not Found"};
             res.status(404).json(error_obj.message);
         }
-        else if (data.response_code === 2){
+        else if (data.response_code === 2 || count < 0 || count > 50 ){
             let error_obj = {code: 400, message : "Bad Request"};
             res.status(400).json(error_obj);
         }
