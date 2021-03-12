@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 /*
 Returns 20 multiple quiz questions of medium difficulty
  */
-exports.getDefaultQuiz  = async function (req, res) {
+exports.getDefaultQuiz = async function (req, res) {
 
     async function getInfo() {
         let response = await fetch('https://opentdb.com/api.php?amount=20&category=22&difficulty=medium&type=multiple');
@@ -12,12 +12,10 @@ exports.getDefaultQuiz  = async function (req, res) {
     }
 
     getInfo().then(data => {
-        if (data.code === '404') {
-            let error_obj = {message : "Quiz Not Found"};
-            res.status(404).json(error_obj.message);
-            res.write("error");
-        }
-        else {
+        if (data.response_code !== 0) {
+            let error_obj = {code: 404, message: "Not Found"};
+            res.status(404).json(error_obj);
+        } else {
             res.json({data});
         }
         res.end();
@@ -28,7 +26,7 @@ exports.getDefaultQuiz  = async function (req, res) {
 /*
 Returns custom questions specified by the request parameters
  */
-exports.getCustomQuiz  = function(req, res) {
+exports.getCustomQuiz = function (req, res) {
 
     var count = req.params.count
     var type = req.params.type
@@ -36,8 +34,7 @@ exports.getCustomQuiz  = function(req, res) {
 
     async function getInfo() {
 
-
-        if(type === 'boolean' && req.params.difficulty === 'hard'){
+        if (type === 'boolean' && req.params.difficulty === 'hard') {
             difficulty = 'medium'
         }
 
@@ -48,15 +45,13 @@ exports.getCustomQuiz  = function(req, res) {
     }
 
     getInfo().then(data => {
-        if (data.code === '404') {
-            let error_obj = {message : "Quiz Not Found"};
-            res.status(404).json(error_obj.message);
-        }
-        else if (data.response_code === 2 || count < 0 || count > 50 ){
-            let error_obj = {code: 400, message : "Bad Request"};
+        if (data.response_code === 2 || count < 0 || count > 50) {
+            let error_obj = {code: 400, message: "Bad Request"};
             res.status(400).json(error_obj);
-        }
-        else {
+        } else if (data.response_code !== 0) {
+            let error_obj = {code: 404, message: "Not Found"};
+            res.status(404).json(error_obj);
+        } else {
             res.json({data});
         }
         res.end();
