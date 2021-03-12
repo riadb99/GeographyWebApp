@@ -5,7 +5,8 @@ const path = require('path'),
     bodyParser = require('body-parser'),
     dataRouter = require('../routes/dataRoute'),
     exampleRouter = require('../routes/examples.server.routes'),
-    userRouter = require('../routes/userRoute');
+    userRouter = require('../routes/userRoute'),
+    quizRouter = require('../routes/quizRoute');
 
 
 module.exports.init = () => {
@@ -34,6 +35,8 @@ module.exports.init = () => {
     app.use('/api/country', dataRouter);
     app.use('/api/example', exampleRouter);
     app.use('/api/user', userRouter);
+    app.use('/api/quiz', quizRouter);
+
 
     if (process.env.NODE_ENV === 'production') {
         // Serve any static files
