@@ -138,6 +138,10 @@ export default function ButtonAppBar() {
                             <ListItemIcon><PersonAddIcon /></ListItemIcon>
                             <ListItemText primary="Login"/>
                         </ListItem>
+						<ListItem button onClick={() => setView(2)} key={"add-patient"}>
+                            <ListItemIcon><HomeIcon /></ListItemIcon>
+                            <ListItemText primary="Quizzes"/>
+                        </ListItem>
                     </List>
                 </Drawer>
             </div>
