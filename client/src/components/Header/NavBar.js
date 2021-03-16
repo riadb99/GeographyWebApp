@@ -75,7 +75,7 @@ export default function ButtonAppBar() {
     useEffect(() => {
         async function renderUserInfo(){
             setLoading(true);
-            await delay(1500)
+            await delay(3000)
             setLoading(false);
             var country = '';
             if(currentUser){

@@ -94,8 +94,10 @@ export default function SignUp() {
             setMessage("")
             setLoading(true)
             await signup(email, password)
-            await verifyEmail()
             setMessage("An email verfication has been sent. Redirecting...")
+            await delay(2000)
+            await verifyEmail()
+
 
 
             axios.post('/api/user', {
