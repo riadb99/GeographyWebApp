@@ -4,3 +4,7 @@ node_modules/
 # IDE specific files
 .idea/**/workspace.xml
 .idea/**/tasks.xml
+
+#Configuration related files
+client/.env.local
+server/config/config.js
