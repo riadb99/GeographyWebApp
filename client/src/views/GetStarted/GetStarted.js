@@ -149,35 +149,6 @@ export default function GetStarted() {
                 <span className={classes.imageMarked}/>
             </Typography>
           </span>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography>
-                                        Lorem Ipsum
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography>
-                                        Lorem Ipsum
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography>
-                                        Lorem Ipsum
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
                 </ButtonBase>
             </div>
         </div>
