@@ -23,7 +23,7 @@ export default function LogoutButton() {
 
         try {
             await logout()
-            history.push("/Home")
+            history.push("/GetStarted")
         } catch {
             setError("Failed to log out")
         }
