@@ -9,3 +9,6 @@ node_modules/
 # Configuration file
 server/config/config.js
 client/.env.local
+
+#cache
+client/.eslintcache
