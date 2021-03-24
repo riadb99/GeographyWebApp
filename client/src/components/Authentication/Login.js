@@ -72,7 +72,7 @@ export default function Login() {
             setError("")
             setLoading(true)
             await login(email, password)
-            history.push("/Home")
+                .then(() => history.push("/Home"))
         } catch {
             setError("Failed to sign in")
         }

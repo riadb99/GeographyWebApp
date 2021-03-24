@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import {auth} from '../firebase';
 import firebase from "firebase/app";
 
@@ -12,8 +12,8 @@ export function AuthProvider({children}) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
 
-    function signup(email, password) {
-        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    async function signup(email, password) {
+        await auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
             .then(() => {
                 return auth.createUserWithEmailAndPassword(email, password);
             })
@@ -21,7 +21,7 @@ export function AuthProvider({children}) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.log(errorCode + ": " + errorMessage)
+                return errorMessage;
             });
     }
 
@@ -38,7 +38,7 @@ export function AuthProvider({children}) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.log(errorCode + ": " + errorMessage)
+                return errorMessage;
             });
     }
 

@@ -19,7 +19,6 @@ import Grow from '@material-ui/core/Grow';
 import countryList from 'react-select-country-list'
 import Select from 'react-select';
 import axios from 'axios';
-import ParticlesBg from 'particles-bg'
 import Switch from "@material-ui/core/Switch";
 import BgToggle from "../BgToggle";
 
@@ -68,12 +67,12 @@ export default function SignUp() {
     const classes = useStyles();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [value, setValue] = useState("");
+    const [country, setCountry] = useState("");
     const options = useMemo(() => countryList().getData(), [])
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
-    const [error, setError] = useState("");
+    const [generalError, setGeneralError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -84,27 +83,40 @@ export default function SignUp() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log(value)
+
+        //validating country selection
+        if (country === "") {
+            return setGeneralError("Please select a country")
+        }
+
+        //Checking email validity
+        if((!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))) {
+            return setGeneralError("Email is incorrectly formatted")
+        }
+
+        //Checking password validity
+        if(password.length < 6) {
+            return setGeneralError("Password needs to be minimum 6 characters")
+        }
+
         if (password !== passwordConfirm) {
-            return setError("Passwords do not match")
+            return setGeneralError("Passwords do not match")
         }
 
         try {
-            setError("")
+            setGeneralError("")
             setMessage("")
             setLoading(true)
             await signup(email, password)
-            setMessage("An email verfication has been sent. Redirecting...")
             await delay(2000)
             await verifyEmail()
-
-
+            setMessage("An email verfication has been sent. Redirecting...")
 
             axios.post('/api/user', {
                 firstName: firstName,
                 lastName: lastName,
                 email: email,
-                country: value.label.toString(),
+                country: country.label.toString(),
                 rank: null,
                 highscore: null
             })
@@ -117,22 +129,18 @@ export default function SignUp() {
 
             await delay(2000)
             history.push("/Home")
+
         } catch (e) {
-
-
-            if (e.code == "auth/email-already-in-use") {
-                setError("Email already in use")
-            } else {
-                console.log(e)
-                setError("Failed to create an account")
-            }
+            setMessage("")
+            //setGeneralError("\n \u2022Failed to create an account \n \u2022 Ensure Email is correctly formatted \n \u2022 Passwords need to contain minimum 6 characters \n")
+            setGeneralError("Failed to create an account")
         }
         setLoading(false)
 
     }
 
     const countryChangeHandler = value => {
-        setValue(value)
+        setCountry(value)
     }
 
     return (
@@ -150,7 +158,6 @@ export default function SignUp() {
                                 checked={bgToggle}
                                 onChange={e => {
                                     setBgToggle(e.target.checked)
-                                    console.log(bgToggle)
                                 }}
                                 name="Disable Animated Background"
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
@@ -162,16 +169,16 @@ export default function SignUp() {
                             <Typography component="h1" variant="h5">
                                 Sign up
                             </Typography>
-                            {error && <Alert severity="error">{error}</Alert>}
+                            {generalError && <Alert severity="error">{generalError}</Alert>}
                             {message && <Alert severity="info">{message}</Alert>}
-                            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                            <form className={classes.form} onSubmit={handleSubmit}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             autoComplete="fname"
                                             name="firstName"
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             id="firstName"
                                             label="First Name"
@@ -182,7 +189,7 @@ export default function SignUp() {
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             id="lastName"
                                             label="Last Name"
@@ -192,13 +199,13 @@ export default function SignUp() {
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Select options={options} styles={dropDownStyles} value={value}
+                                        <Select options={options} styles={dropDownStyles} value={country}
                                                 onChange={countryChangeHandler}/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             id="email"
                                             label="Email Address"
@@ -210,7 +217,7 @@ export default function SignUp() {
                                     <Grid item xs={12}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             name="password"
                                             label="Password"
@@ -223,7 +230,7 @@ export default function SignUp() {
                                     <Grid item xs={12}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             name="password-confirm"
                                             label="Confirm Password"
