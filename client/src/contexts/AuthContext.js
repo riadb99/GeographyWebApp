@@ -29,7 +29,7 @@ export function AuthProvider({children}) {
         return auth.currentUser.sendEmailVerification()
     }
 
-    function login(email, password) {
+    async function login(email, password) {
         auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
             .then(() => {
                 return auth.signInWithEmailAndPassword(email, password);
@@ -38,7 +38,7 @@ export function AuthProvider({children}) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                return errorMessage;
+                console.log(errorCode)
             });
     }
 
@@ -59,8 +59,7 @@ export function AuthProvider({children}) {
     }
 
     function isAuthenticated() {
-        let isAuth = currentUser ? true : false;
-        return isAuth;
+        return currentUser ? true : false;
     }
 
     useEffect(() => {

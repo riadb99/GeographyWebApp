@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,6 +19,7 @@ import Grow from '@material-ui/core/Grow';
 import ParticlesBg from 'particles-bg'
 import Switch from "@material-ui/core/Switch";
 import BgToggle from "../BgToggle";
+import axios from "axios";
 
 function Copyright() {
     return (
@@ -61,25 +62,36 @@ export default function Login() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const {login} = useAuth();
+    const {login, currentUser, isAuthenticated} = useAuth();
     const [animate, setAnimate] = useState(true);
     const [bgToggle, setBgToggle] = useState(false)
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
-    async function handleSubmit(e) {
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         try {
             setError("")
             setLoading(true)
-            await login(email, password)
-                .then(() => history.push("/Home"))
-        } catch {
+            login(email, password)
+                .catch((e) => console.log(e))
+        } catch(e) {
+            console.log(e)
             setError("Failed to sign in")
         }
 
         setLoading(false)
 
     }
+
+    useEffect(() => {
+        if(currentUser) {
+            setTimeout(() => {
+                history.push("/Home");
+            }, 2500);
+        }
+    }, [currentUser]);
 
     return (
         <div>
@@ -96,7 +108,6 @@ export default function Login() {
                                 checked={bgToggle}
                                 onChange={e => {
                                     setBgToggle(e.target.checked)
-                                    console.log(bgToggle)
                                 }}
                                 name="Disable Animated Background"
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
