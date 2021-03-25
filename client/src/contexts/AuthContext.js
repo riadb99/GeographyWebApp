@@ -29,18 +29,10 @@ export function AuthProvider({children}) {
         return auth.currentUser.sendEmailVerification()
     }
 
-    async function login(email, password) {
-        auth.setPersistence(firebase.auth.Auth.Persistence.SESSION)
-            .then(() => {
-                return auth.signInWithEmailAndPassword(email, password);
-            })
-            .catch((error) => {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.log(errorCode)
-            });
+    function login(email, password) {
+        return auth.signInWithEmailAndPassword(email, password)
     }
+
 
     function logout() {
         return auth.signOut()

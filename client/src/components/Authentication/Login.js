@@ -65,33 +65,22 @@ export default function Login() {
     const {login, currentUser, isAuthenticated} = useAuth();
     const [animate, setAnimate] = useState(true);
     const [bgToggle, setBgToggle] = useState(false)
-    const delay = ms => new Promise(res => setTimeout(res, ms));
 
-
-    const handleSubmit = async (e) => {
+    async function handleSubmit(e) {
         e.preventDefault()
 
         try {
             setError("")
             setLoading(true)
-            login(email, password)
-                .catch((e) => console.log(e))
-        } catch(e) {
-            console.log(e)
-            setError("Failed to sign in")
+            await login(email, password)
+            history.push("/")
+        } catch {
+            setError("Failed to log in")
         }
 
         setLoading(false)
-
     }
 
-    useEffect(() => {
-        if(currentUser) {
-            setTimeout(() => {
-                history.push("/Home");
-            }, 2500);
-        }
-    }, [currentUser]);
 
     return (
         <div>
@@ -120,7 +109,7 @@ export default function Login() {
                                 Log in
                             </Typography>
                             {error && <Alert severity="error">{error}</Alert>}
-                            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                            <form className={classes.form} onSubmit={handleSubmit}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
                                         <TextField
