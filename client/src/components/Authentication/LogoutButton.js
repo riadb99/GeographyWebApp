@@ -1,16 +1,7 @@
 import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import {useAuth} from "../../contexts/AuthContext";
 import {useHistory} from "react-router-dom"
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-}));
 
 export default function LogoutButton() {
     const {logout, isAuthenticated} = useAuth();

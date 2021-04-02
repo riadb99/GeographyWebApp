@@ -130,7 +130,6 @@ export default function SignUp() {
 
         } catch (e) {
             setMessage("")
-            //setGeneralError("\n \u2022Failed to create an account \n \u2022 Ensure Email is correctly formatted \n \u2022 Passwords need to contain minimum 6 characters \n")
             setGeneralError("Failed to create an account")
         }
         setLoading(false)
