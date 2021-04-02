@@ -5,7 +5,7 @@ export default function BgToggle(props) {
 
     if (props.toggle === false) {
         return (
-            <ParticlesBg type="ball" bg={true}/>
+            <ParticlesBg type="cobweb" bg={true}/>
         )
     } else {
         return null;

@@ -25,28 +25,28 @@ export function AuthProvider({children}) {
             });
     }
 
-    function verifyEmail() {
+    function verifyUserEmail() {
         return auth.currentUser.sendEmailVerification()
     }
 
-    function login(email, password) {
+    function signin(email, password) {
         return auth.signInWithEmailAndPassword(email, password)
     }
 
 
-    function logout() {
+    function signout() {
         return auth.signOut()
     }
 
-    function resetPassword(email) {
+    function sendPasswordResetEmail(email) {
         return auth.sendPasswordResetEmail(email)
     }
 
-    function updateEmail(email) {
+    function editEmail(email) {
         return currentUser.updateEmail(email)
     }
 
-    function updatePassword(password) {
+    function editPassword(password) {
         return currentUser.updatePassword(password)
     }
 
@@ -55,24 +55,24 @@ export function AuthProvider({children}) {
     }
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
+        const authStateChanged = auth.onAuthStateChanged(user => {
             setCurrentUser(user)
             setLoading(false)
         })
 
-        return unsubscribe
+        return authStateChanged
     }, [])
 
     const value = {
         currentUser,
-        login,
+        login: signin,
         signup,
-        logout,
-        resetPassword,
-        updateEmail,
-        updatePassword,
+        logout: signout,
+        resetPassword: sendPasswordResetEmail,
+        updateEmail: editEmail,
+        updatePassword: editPassword,
         isAuthenticated,
-        verifyEmail
+        verifyUserEmail
     }
 
     return (
