@@ -1,6 +1,6 @@
 import React, {memo, useEffect, useState} from "react";
-import axios from "axios";
 import DisplayData from "./DisplayData";
+import axios from "axios";
 import {
     ZoomableGroup,
     ComposableMap,
@@ -24,15 +24,9 @@ const rounded = num => {
 
 const MapChart = ({ setTooltipContent }) => {
     const [countries, setCountries] = useState([]);
-    const [data, setData] = useState([]);
+    const [country, setCountry] = useState([]);
+
     const delay = ms => new Promise(res => setTimeout(res, ms));
-    async function fetchData(name) {
-        axios.get('/api/country/' + name)
-            .then(function(response){
-                setData(response.data);
-                console.log(response.data);
-            })
-    }
 
     useEffect(() => {
         async function fetchCountry() {
@@ -45,6 +39,8 @@ const MapChart = ({ setTooltipContent }) => {
     });
 
     return (
+        <div>
+            <div>
         <>
             <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
                 <ZoomableGroup>
@@ -62,11 +58,14 @@ const MapChart = ({ setTooltipContent }) => {
                                         setTooltipContent("");
                                     }}
                                     onClick={async () => { //Display component here
-                                        const {ISO_A2} = geo.properties; //name of country
+                                        const {ISO_A2} = geo.properties; //alpha code 2 of country
                                         console.log(geo.properties);
                                         console.log(countries);
                                         var result = countries.filter(obj => {
-                                            return obj.alpha2Code === ISO_A2;
+                                            if(obj.alpha2Code === ISO_A2){
+                                                setCountry(obj);
+                                                return obj;
+                                            }
                                         })
                                         console.log(result);
                                         console.log(result[0].area);
@@ -94,8 +93,12 @@ const MapChart = ({ setTooltipContent }) => {
                     </Geographies>
                 </ZoomableGroup>
             </ComposableMap>
-            <DisplayData data={data}/>
         </>
+            </div>
+            <div>
+                <DisplayData country={country} />
+            </div>
+        </div>
     );
 };
 
