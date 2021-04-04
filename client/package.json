@@ -4,8 +4,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "firebase": "^8.2.5",
     "react": "^16.10.1",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^16.10.1",
     "react-scripts": "^4.0.1",
     "react-tsparticles": "^1.18.11"

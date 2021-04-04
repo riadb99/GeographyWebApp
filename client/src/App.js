@@ -15,16 +15,6 @@ const App = () => {
     return (
         <div>
             <NavBar/>
-           {/* <Switch>
-                <Route exact path="/Home" component={Home}/>
-                <Route exact path="/Signup" component={SignUp}/>
-                <Route exact path="/Login" component={Login}/>
-                <Route exact path="/ForgotPassword" component={ForgotPassword}/>
-                <Route exact path="/">
-                    <Redirect to="/Home"/>
-                </Route>
-                <Route component={NotFound}/>
-            </Switch>*/}
             <MapChart setTooltipContent={setContent} />
             <ReactTooltip>{content}</ReactTooltip>
         </div>

@@ -1,4 +1,6 @@
-import React, { memo } from "react";
+import React, {memo, useEffect, useState} from "react";
+import axios from "axios";
+import DisplayData from "./DisplayData";
 import {
     ZoomableGroup,
     ComposableMap,
@@ -19,7 +21,29 @@ const rounded = num => {
     }
 };
 
+
 const MapChart = ({ setTooltipContent }) => {
+    const [countries, setCountries] = useState([]);
+    const [data, setData] = useState([]);
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+    async function fetchData(name) {
+        axios.get('/api/country/' + name)
+            .then(function(response){
+                setData(response.data);
+                console.log(response.data);
+            })
+    }
+
+    useEffect(() => {
+        async function fetchCountry() {
+            axios.get('https://restcountries.eu/rest/v2')
+                .then(function(response){
+                    setCountries(response.data);
+                })
+        }
+      fetchCountry();
+    });
+
     return (
         <>
             <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
@@ -37,8 +61,18 @@ const MapChart = ({ setTooltipContent }) => {
                                     onMouseLeave={() => {
                                         setTooltipContent("");
                                     }}
-                                    onClick={() => { //Display component here
-                                        setTooltipContent("adisa");
+                                    onClick={async () => { //Display component here
+                                        const {ISO_A2} = geo.properties; //name of country
+                                        console.log(geo.properties);
+                                        console.log(countries);
+                                        var result = countries.filter(obj => {
+                                            return obj.alpha2Code === ISO_A2;
+                                        })
+                                        console.log(result);
+                                        console.log(result[0].area);
+                                        if(result[0].area !== undefined){
+                                            setTooltipContent(`${result[0].area}`);
+                                        }
                                     }}
                                     style={{
                                         default: {
@@ -60,6 +94,7 @@ const MapChart = ({ setTooltipContent }) => {
                     </Geographies>
                 </ZoomableGroup>
             </ComposableMap>
+            <DisplayData data={data}/>
         </>
     );
 };
