@@ -6,17 +6,28 @@ import NavBar from "./components/Header/NavBar";
 import SignUp from "./components/Authentication/Signup";
 import Login from "./components/Authentication/Login";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
-import ReactTooltip from "react-tooltip";
 import "./components/Map/Map.css"
-import MapChart from "./components/Map/Map";
+import GetStarted from "./views/GetStarted/GetStarted";
+import Leaderboards from "./views/Leaderboards/Leaderboards";
 
 const App = () => {
     const [content, setContent] = useState("");
     return (
         <div>
             <NavBar/>
-            <MapChart setTooltipContent={setContent} />
-            <ReactTooltip>{content}</ReactTooltip>
+            <Switch>
+                <Route exact path="/Home" component={Home}/>
+                <Route exact path="/GetStarted" component={GetStarted} />
+                <Route exact path="/Signup" component={SignUp}/>
+                <Route exact path="/Login" component={Login}/>
+                <Route exact path="/Leaderboards" component={Leaderboards}/>
+                <Route exact path="/ForgotPassword" component={ForgotPassword}/>
+                <Route exact path="/">
+                    <Redirect to="/GetStarted"/>
+                </Route>
+                <Route component={NotFound}/>
+
+            </Switch>
         </div>
     );
 }

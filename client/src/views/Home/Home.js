@@ -1,22 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from '../../assets/logo.svg';
 import './Home.css';
+import MapChart from "../../components/Map/Map";
+import ReactTooltip from "react-tooltip";
+import '../../components/Map/Map.css';
 
 function Home() {
+    const [content, setContent] = useState("");
+
     return (
         <div>
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                </a>
+            <header>
+                <MapChart setTooltipContent={setContent} />
+                <ReactTooltip>{content}</ReactTooltip>
             </header>
         </div>
     );
