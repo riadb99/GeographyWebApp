@@ -10,7 +10,10 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 500,
+        maxWidth: 200,
+        border: 20,
+        color: 'black',
+        boxShadow: '1px 1px 4px 0 rgba(253, 94, 83, .3)'
     },
 });
 
@@ -23,19 +26,22 @@ export default function DisplayData(props) {
                     <CardMedia
                         component="img"
                         alt={props.country.name + ' Flag'}
-                        height="300"
-                        width = "500"
+                        height="100%"
+                        width = "100%"
                         image={props.country.flag}
                         title="Flag"
                     />
                     <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <Typography variant="h6">
                             {props.country.name}
                         </Typography>
+                        <Typography variant="h8">
+                            Endonym: {props.country.nativeName}
+                        </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            Population: {props.country.population}
-                            <br />
                             Capital: {props.country.capital}
+                            <br />
+                            Population: {props.country.population}
                             <br />
 
                         </Typography>

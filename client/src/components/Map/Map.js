@@ -11,22 +11,9 @@ import {
 const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-const rounded = num => {
-    if (num > 1000000000) {
-        return Math.round(num / 100000000) / 10 + "Bn";
-    } else if (num > 1000000) {
-        return Math.round(num / 100000) / 10 + "M";
-    } else {
-        return Math.round(num / 100) / 10 + "K";
-    }
-};
-
-
 const MapChart = ({ setTooltipContent }) => {
     const [countries, setCountries] = useState([]);
     const [country, setCountry] = useState([]);
-
-    const delay = ms => new Promise(res => setTimeout(res, ms));
 
     useEffect(() => {
         async function fetchCountry() {
@@ -39,11 +26,14 @@ const MapChart = ({ setTooltipContent }) => {
     });
 
     return (
-        <div>
+        <div class="container">
+            <div className="display">
+                <DisplayData country={country} />
+            </div>
             <div>
         <>
             <ComposableMap data-tip="" projectionConfig={{ scale: 200 }}>
-                <ZoomableGroup>
+                <ZoomableGroup disablePanning>
                     <Geographies geography={geoUrl}>
                         {({ geographies }) =>
                             geographies.map(geo => (
@@ -51,15 +41,15 @@ const MapChart = ({ setTooltipContent }) => {
                                     key={geo.rsmKey}
                                     geography={geo}
                                     onMouseEnter={() => {
-                                        const { NAME, POP_EST } = geo.properties;
-                                        setTooltipContent(`${NAME} — ${rounded(POP_EST)}`);
+                                        const { NAME } = geo.properties;
+                                        setTooltipContent(`${NAME}`);
                                     }}
                                     onMouseLeave={() => {
                                         setTooltipContent("");
                                     }}
                                     onClick={async () => { //Display component here
                                         const {ISO_A2} = geo.properties; //alpha code 2 of country
-                                        console.log(geo.properties);
+                                        console.log(ISO_A2);
                                         console.log(countries);
                                         var result = countries.filter(obj => {
                                             if(obj.alpha2Code === ISO_A2){
@@ -67,11 +57,7 @@ const MapChart = ({ setTooltipContent }) => {
                                                 return obj;
                                             }
                                         })
-                                        console.log(result);
-                                        console.log(result[0].area);
-                                        if(result[0].area !== undefined){
-                                            setTooltipContent(`${result[0].area}`);
-                                        }
+                                        setTooltipContent("");
                                     }}
                                     style={{
                                         default: {
@@ -94,9 +80,6 @@ const MapChart = ({ setTooltipContent }) => {
                 </ZoomableGroup>
             </ComposableMap>
         </>
-            </div>
-            <div>
-                <DisplayData country={country} />
             </div>
         </div>
     );
