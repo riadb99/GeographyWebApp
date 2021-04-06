@@ -1,3 +1,10 @@
+/***************************************************************************************
+ *    Title: Firebase Authentication Documentation
+ *    Author: Google
+ *    Availability: https://firebase.google.com/docs/auth/web/start
+ *
+ ***************************************************************************************/
+
 import React, {useContext, useEffect, useState} from "react"
 import {auth} from '../firebase';
 import firebase from "firebase/app";
@@ -19,7 +26,6 @@ export function AuthProvider({children}) {
             })
             .catch((error) => {
                 // Handle Errors here.
-                var errorCode = error.code;
                 var errorMessage = error.message;
                 return errorMessage;
             });

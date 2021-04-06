@@ -1,3 +1,11 @@
+/***************************************************************************************
+ *    Title: Material UI Template code
+ *    Author: Material UI
+ *    Date: 03/24/2020
+ *    Availability: https://material-ui.com/getting-started/templates/
+ *
+ ***************************************************************************************/
+
 import React, {useState, useMemo} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';

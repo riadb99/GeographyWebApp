@@ -1,4 +1,12 @@
-import React, {useState, useRef, useEffect} from 'react';
+/***************************************************************************************
+ *    Title: Material UI Template code
+ *    Author: Material UI
+ *    Date: 03/24/2020
+ *    Availability: https://material-ui.com/getting-started/templates/
+ *
+ ***************************************************************************************/
+
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -58,7 +66,7 @@ export default function Login() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const {login, currentUser, isAuthenticated} = useAuth();
+    const {login} = useAuth();
     const [animate, setAnimate] = useState(true);
     const [bgToggle, setBgToggle] = useState(false)
 

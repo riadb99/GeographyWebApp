@@ -1,3 +1,11 @@
+/***************************************************************************************
+ *    Title: Material UI Template code
+ *    Author: Material UI
+ *    Date: 03/24/2020
+ *    Availability: https://material-ui.com/getting-started/templates/
+ *
+ ***************************************************************************************/
+
 import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import {useAuth} from "../../contexts/AuthContext";

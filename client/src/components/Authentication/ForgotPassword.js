@@ -1,4 +1,12 @@
-import React, {useState, useRef} from 'react';
+/***************************************************************************************
+ *    Title: Material UI Template code
+ *    Author: Material UI
+ *    Date: 03/24/2020
+ *    Availability: https://material-ui.com/getting-started/templates/
+ *
+ ***************************************************************************************/
+
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -70,7 +78,7 @@ export default function ForgotPassword() {
             await resetPassword(email)
             setMessage("Password reset link has been sent to your email.")
         } catch (e) {
-            if (e.code == "auth/invalid-email") {
+            if (e.code === "auth/invalid-email") {
                 setError("Email not found. Please sign up first.")
             } else {
                 setError("Failed to reset password.")
