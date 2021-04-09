@@ -44,6 +44,11 @@ img {
 	background-color:#2f3c85;
 }
 
+.redirect {
+	text-decoration: none;
+	color: black;
+}
+
 .App {
     text-align: center;
     background: #282c34;
