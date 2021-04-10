@@ -2,12 +2,11 @@ const User = require('../models/User.js')
 
 
 exports.createUser = async function (req, res) {
-    try {
-        const example = await User.create(req.body);
-        res.json({success: true, message: "success", user: example});
-    } catch (err) {
-        res.json({success: false, code: err.code});
-    }
+    await User.create(req.body, function(err, data) {
+        if(err) res.status(400).json("Error: " + err)
+        else
+            res.json({success: true, message: "success", user: data});
+    })
 }
 
 exports.getAllUsers = async function (req, res) {
@@ -35,5 +34,20 @@ exports.deleteUserByEmail = async function (req, res) {
         if(err) res.status(404).json("Error: " + err)
         else
             res.json({success: true, message: "success", user: tempUser});
+    });
+}
+
+exports.updateUserByEmail = async function (req, res) {
+
+    var update = req.body;
+    var filter = { email: req.params.email};
+
+    User.findOneAndUpdate(filter, update, {
+        new: true
+    }, function(err, data) {
+        if(err) res.status(404).json("Error: " + err);
+        else if (data === null) res.status(404).json("Error: User not Found");
+        else
+            res.json({success: true, message: "success", user: data});
     });
 }

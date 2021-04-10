@@ -107,7 +107,7 @@ ___
 
 ###Create User
 
-Returns json data about a single user using email
+Create a User
 * **URL**
 
   /api/user
@@ -168,7 +168,7 @@ ___
 
 ###Delete User
 
-Returns json data about a single user using email
+Delete User via email
 * **URL**
 
   /api/user/:email
@@ -222,6 +222,65 @@ Returns json data about a single user using email
             "user": []
         }
 ___
+
+
+###Update User Via Email
+
+Update User Highscore using email
+* **URL**
+
+  /api/user/:email
+
+
+* **Method**
+
+  `Patch`
+
+
+*  **URL Params**
+
+   **Required:**
+   `email=[string]`
+
+
+* **Data Params**
+
+  **Required:**
+    ```
+    { 
+        "highscore": 85 //Any score here
+    } 
+
+
+* **Success Response:**
+
+    * **Code:** 200 <br />
+      **Content:**
+      ```
+      {
+          "success": true,
+          "message": "success",
+          "user": [
+            {
+                  "_id": "604918d65a5a4610a67b2c90",
+                  "firstName": "Saw Luke Loo",
+                  "lastName": "Wah",
+                  "email": "lukieloowah009@gmail.com",
+                  "country": "Japan",
+                  "rank": null,
+                  "highscore": 85,
+                  "__v": 0
+            }         
+          ]
+      }
+
+* **Error Response:**
+    * **Code:** 404 Not Found <br />
+      **Content:**
+        ```
+        "Error: User not Found"
+___
+
 
 ___
 
