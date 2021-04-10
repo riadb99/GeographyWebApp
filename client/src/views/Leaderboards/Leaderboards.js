@@ -112,7 +112,7 @@ const Leaderboards = (props) => {
                         { title: "Rank", field: "rank" },
                         { title: "First Name", field: "firstName" },
                         { title: "Last Name", field: "lastName" },
-                        { title: "Score", field: "score" },
+                        { title: "Score", field: "highscore" },
 
                     ]}
 
