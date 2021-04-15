@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -35,26 +33,24 @@ export default function DisplayData(props) {
                         <Typography variant="h6">
                             {props.country.name}
                         </Typography>
-                        <Typography variant="h8">
+                        <Typography variant="h7">
                             Endonym: {props.country.nativeName}
                         </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
+                        <Typography variant="h8" color="textSecondary" component="p">
+                            <br />
                             Capital: {props.country.capital}
+                            <br />
+                            Sub-Region: {props.country.subregion}
+                            <br />
+                            Area: {props.country.area} sq km
                             <br />
                             Population: {props.country.population}
                             <br />
-
+                            Currency: {props.country.currencies[0].name}
+                            <br />
                         </Typography>
                     </CardContent>
                 </CardActionArea>
-                <CardActions>
-                    <Button size="small" color="primary">
-                        Share
-                    </Button>
-                    <Button size="small" color="primary">
-                        Learn More
-                    </Button>
-                </CardActions>
             </Card>
         );
     }
