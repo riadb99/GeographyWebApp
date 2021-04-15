@@ -5,9 +5,11 @@
   "dependencies": {
     "@material-ui/lab": "^4.0.0-alpha.57",
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "firebase": "^8.2.5",
     "particles-bg": "^2.5.0",
     "react": "^16.10.1",
+    "react-bootstrap": "^1.5.2",
     "react-country-region-selector-material-ui-new": "^1.5.2",
     "react-dom": "^16.10.1",
     "react-flag-icon-css": "^1.0.25",

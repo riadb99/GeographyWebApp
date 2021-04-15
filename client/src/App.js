@@ -6,10 +6,12 @@ import NavBar from "./components/Header/NavBar";
 import SignUp from "./components/Authentication/Signup";
 import Login from "./components/Authentication/Login";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
+import "./components/Map/Map.css"
 import GetStarted from "./views/GetStarted/GetStarted";
 import Leaderboards from "./views/Leaderboards/Leaderboards";
 
 const App = () => {
+    const [content, setContent] = useState("");
     return (
         <div>
             <NavBar/>

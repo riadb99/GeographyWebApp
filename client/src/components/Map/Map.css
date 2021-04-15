@@ -13,3 +13,9 @@ svg {
     vertical-align: middle;
 }
 
+.display {
+    position: absolute;
+    margin-top: 100px;
+}
+
+
