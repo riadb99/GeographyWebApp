@@ -89,6 +89,7 @@ const useStyles = makeStyles((theme) => ({
 const Leaderboards = (props) => {
 
     const [leaderBoards, setLeaderboards] = useState([]);
+    //const [sortedTable, setSortedTable] = useState([]);
     useEffect(() => {
         axios.get('/api/user').then(response => {
             setLeaderboards(response.data);
@@ -96,6 +97,8 @@ const Leaderboards = (props) => {
         });
 
     }, [props.updated]);
+
+    const sortedData = leaderBoards.sort ((a, b) => b.highscore - a.highscore);
 
     const classes = useStyles();
 
@@ -109,7 +112,7 @@ const Leaderboards = (props) => {
                     title="Leaderboards"
 
                     columns={[
-                        { title: "Rank", field: "rank" },
+                        //{ title: "Rank", field: "rank" },
                         { title: "First Name", field: "firstName" },
                         { title: "Last Name", field: "lastName" },
                         { title: "Score", field: "highscore" },
@@ -117,7 +120,7 @@ const Leaderboards = (props) => {
                     ]}
 
                     data={
-                        leaderBoards
+                        sortedData
                     }
                     // options={{
                     //     filtering: true,

@@ -105,7 +105,7 @@ function SimpleDialog(props) {
             &nbsp;
 
             <div>
-                High Score:
+                High Score: {props.highscore}
             </div>
             &nbsp;
         </Dialog>
