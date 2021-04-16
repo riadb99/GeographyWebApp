@@ -20,6 +20,7 @@ import {useAuth} from "../../contexts/AuthContext";
 import axios from 'axios';
 import RenderFlag from '../FlagRenderer';
 import Leaderboards from '@material-ui/icons/FormatListNumbered';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import './NavBar.css'
 import CircularProgressRenderer from '../CircularProgressRenderer';
 import { useHistory } from 'react-router-dom';
@@ -226,9 +227,9 @@ export default function ButtonAppBar() {
                             <ListItemIcon><Leaderboards/></ListItemIcon>
                             <ListItemText primary="Leaderboards" />
                         </ListItem>
-						<ListItem button onClick={() => setView(2)} key={"add-patient"}>
-                            <ListItemIcon><HomeIcon /></ListItemIcon>
-                            <ListItemText primary="Quizzes"/>
+                        <ListItem button onClick={()=> history.push("/Quizzes")}>
+                            <ListItemIcon><SportsEsportsIcon/></ListItemIcon>
+                            <ListItemText primary="Quizzes" />
                         </ListItem>
                     </List>
                 </Drawer>
