@@ -1,3 +1,10 @@
+/***************************************************************************************
+ *    Title: Firebase Javascript
+ *    Author: Google
+ *    Availability: https://firebase.google.com/docs/reference/js/firebase
+ *
+ ***************************************************************************************/
+
 import firebase from "firebase/app"
 import "firebase/auth"
 

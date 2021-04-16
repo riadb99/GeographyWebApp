@@ -1,14 +1,20 @@
+/***************************************************************************************
+ *    Title: Material UI Template code
+ *    Author: Material UI
+ *    Date: 03/24/2020
+ *    Availability: https://material-ui.com/getting-started/templates/
+ *
+ ***************************************************************************************/
+
 import React, {useState, useMemo} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import EnhancedEncryptionTwoToneIcon from '@material-ui/icons/EnhancedEncryptionTwoTone';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -19,7 +25,6 @@ import Grow from '@material-ui/core/Grow';
 import countryList from 'react-select-country-list'
 import Select from 'react-select';
 import axios from 'axios';
-import ParticlesBg from 'particles-bg'
 import Switch from "@material-ui/core/Switch";
 import BgToggle from "../BgToggle";
 
@@ -45,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -68,41 +73,56 @@ export default function SignUp() {
     const classes = useStyles();
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [value, setValue] = useState("");
+    const [country, setCountry] = useState("");
     const options = useMemo(() => countryList().getData(), [])
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
-    const [error, setError] = useState("");
+    const [generalError, setGeneralError] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const {signup, verifyEmail} = useAuth();
+    const {signup, verifyUserEmail} = useAuth();
     const [animate, setAnimate] = useState(true);
     const [bgToggle, setBgToggle] = useState(false)
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log(value)
+
+        //validating country selection
+        if (country === "") {
+            return setGeneralError("Please select a country")
+        }
+
+        //Checking email validity
+        if((!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email))) {
+            return setGeneralError("Email is incorrectly formatted")
+        }
+
+        //Checking password validity
+        if(password.length < 6) {
+            return setGeneralError("Password needs to be minimum 6 characters")
+        }
+
         if (password !== passwordConfirm) {
-            return setError("Passwords do not match")
+            return setGeneralError("Passwords do not match")
         }
 
         try {
-            setError("")
+            setGeneralError("")
             setMessage("")
             setLoading(true)
             await signup(email, password)
-            await verifyEmail()
+            await delay(2000)
+            await verifyUserEmail()
             setMessage("An email verfication has been sent. Redirecting...")
-
 
             axios.post('/api/user', {
                 firstName: firstName,
                 lastName: lastName,
-                email: email,
-                country: value.label.toString(),
+                email: email.toLowerCase(),
+                country: country.label.toString(),
                 rank: null,
                 highscore: null
             })
@@ -115,22 +135,17 @@ export default function SignUp() {
 
             await delay(2000)
             history.push("/Home")
+
         } catch (e) {
-
-
-            if (e.code == "auth/email-already-in-use") {
-                setError("Email already in use")
-            } else {
-                console.log(e)
-                setError("Failed to create an account")
-            }
+            setMessage("")
+            setGeneralError("Failed to create an account")
         }
         setLoading(false)
 
     }
 
     const countryChangeHandler = value => {
-        setValue(value)
+        setCountry(value)
     }
 
     return (
@@ -148,28 +163,27 @@ export default function SignUp() {
                                 checked={bgToggle}
                                 onChange={e => {
                                     setBgToggle(e.target.checked)
-                                    console.log(bgToggle)
                                 }}
                                 name="Disable Animated Background"
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                             Disable Animated Background
                             <Avatar className={classes.avatar}>
-                                <LockOutlinedIcon/>
+                                <EnhancedEncryptionTwoToneIcon/>
                             </Avatar>
                             <Typography component="h1" variant="h5">
                                 Sign up
                             </Typography>
-                            {error && <Alert severity="error">{error}</Alert>}
+                            {generalError && <Alert severity="error">{generalError}</Alert>}
                             {message && <Alert severity="info">{message}</Alert>}
-                            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                            <form className={classes.form} onSubmit={handleSubmit}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             autoComplete="fname"
                                             name="firstName"
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             id="firstName"
                                             label="First Name"
@@ -180,7 +194,7 @@ export default function SignUp() {
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             id="lastName"
                                             label="Last Name"
@@ -190,13 +204,13 @@ export default function SignUp() {
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Select options={options} styles={dropDownStyles} value={value}
+                                        <Select options={options} styles={dropDownStyles} value={country}
                                                 onChange={countryChangeHandler}/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             id="email"
                                             label="Email Address"
@@ -208,7 +222,7 @@ export default function SignUp() {
                                     <Grid item xs={12}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             name="password"
                                             label="Password"
@@ -221,7 +235,7 @@ export default function SignUp() {
                                     <Grid item xs={12}>
                                         <TextField
                                             variant="outlined"
-                                            required
+                                            required={true}
                                             fullWidth
                                             name="password-confirm"
                                             label="Confirm Password"
@@ -229,12 +243,6 @@ export default function SignUp() {
                                             id="password"
                                             autoComplete="current-password"
                                             onChange={e => setPasswordConfirm(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <FormControlLabel
-                                            control={<Checkbox value="allowExtraEmails" color="primary"/>}
-                                            label="I want to receive inspiration, marketing promotions and updates via email."
                                         />
                                     </Grid>
                                 </Grid>

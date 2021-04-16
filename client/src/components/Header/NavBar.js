@@ -19,9 +19,20 @@ import LoginButton from "../Authentication/LoginButton";
 import {useAuth} from "../../contexts/AuthContext";
 import axios from 'axios';
 import RenderFlag from '../FlagRenderer';
-import PersonIcon from '@material-ui/icons/Person';
+import Leaderboards from '@material-ui/icons/FormatListNumbered';
 import './NavBar.css'
 import CircularProgressRenderer from '../CircularProgressRenderer';
+import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import PersonIcon from '@material-ui/icons/Person';
+import AddIcon from '@material-ui/icons/Add';
+import PropTypes from 'prop-types';
+
+import { blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -59,30 +70,96 @@ const theme = createMuiTheme({
 });
 
 
+function SimpleDialog(props) {
+    const classes = useStyles();
+    const { onClose, selectedValue, open } = props;
+    const [fullWidth, setFullWidth] = React.useState(true);
+    const [maxWidth, setMaxWidth] = React.useState('xs');
+
+
+
+    const handleClose = () => {
+        onClose(selectedValue);
+    };
+
+
+    return (
+        <Dialog maxWidth={maxWidth} fullWidth={fullWidth} onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+            <DialogTitle>
+                <Typography variant="h5" align="center">Profile</Typography>
+            </DialogTitle>
+
+            <div>
+            Name:   {props.userName}
+            </div>
+            &nbsp;
+
+            <div>
+                Email: {props.email}
+            </div>
+            &nbsp;
+
+            <div>
+                Country: {props.country}
+            </div>
+            &nbsp;
+
+            <div>
+                High Score:
+            </div>
+            &nbsp;
+        </Dialog>
+    );
+}
+
+SimpleDialog.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    selectedValue: PropTypes.string.isRequired,
+};
+
+
 export default function ButtonAppBar() {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [view, setView] = useState(0);
     const [updated, setUpdated] = useState(0);
     const {currentUser} = useAuth();
     const [currentUserName, setCurrentUserName] = useState('');
+    const [currentUserCountry, setCurrentUserCountry] = useState('');
     const [currentUserCountryCode, setCurrentUserCountryCode] = useState('');
     const [loading, setLoading] = useState(false);
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const classes = useStyles();
 
+    const history = useHistory();
+
+    const [open, setOpen] = React.useState(false);
+
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+
+    };
+
+
 
     useEffect(() => {
         async function renderUserInfo(){
             setLoading(true);
-            await delay(1500)
+            await delay(3000)
             setLoading(false);
-            var country = '';
+            let country = '';
             if(currentUser){
                 axios.get('/api/user/' + currentUser.email)
                     .then(function(response){
                         setCurrentUserName(response.data[0].firstName + ' ' + response.data[0].lastName)
                         country = response.data[0].country
+                        setCurrentUserCountry(country);
                     })
                     .then(() => {
                         axios.get('https://restcountries.eu/rest/v2/name/' + country)
@@ -100,6 +177,7 @@ export default function ButtonAppBar() {
 
     }, [currentUser]);
 
+
     return (
         <MuiThemeProvider theme={theme}>
             <div className={classes.root}>
@@ -111,7 +189,11 @@ export default function ButtonAppBar() {
                         <Typography variant="h6" className={classes.title} >
                             Azure Marble
                         </Typography>
-                        <PersonIcon />
+                        {/*<Button onClick={()=> history.push("/GetStarted")} className={classes.title}>Azure Marble</Button>*/}
+                        <IconButton onClick={handleClickOpen}>
+                            <PersonIcon />
+                        </IconButton>
+                        <SimpleDialog open={open} onClose={handleClose} userName={currentUserName} country={currentUserCountry} email={currentUser && currentUser.email}/>
                         <CircularProgressRenderer loading={loading} />
                         {currentUserName}
                         &nbsp;
@@ -130,13 +212,19 @@ export default function ButtonAppBar() {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button onClick={() => setView(0)} key={"patient"}>
+                        {/*<Button onClick={()=> history.push("/mypage")}>Click me!</Button>*/}
+
+                        <ListItem button onClick={()=> history.push("/Home")}>
                             <ListItemIcon><HomeIcon/></ListItemIcon>
                             <ListItemText primary="Home" />
                         </ListItem>
-                        <ListItem button onClick={() => setView(2)} key={"add-patient"}>
-                            <ListItemIcon><PersonAddIcon /></ListItemIcon>
-                            <ListItemText primary="Login"/>
+                        {/*<ListItem button onClick={()=> history.push("/Login")}>*/}
+                        {/*    <ListItemIcon><PersonAddIcon /></ListItemIcon>*/}
+                        {/*    <ListItemText primary="Login"/>*/}
+                        {/*</ListItem>*/}
+                        <ListItem button onClick={()=> history.push("/Leaderboards")}>
+                            <ListItemIcon><Leaderboards/></ListItemIcon>
+                            <ListItemText primary="Leaderboards" />
                         </ListItem>
 						<ListItem button onClick={() => setView(2)} key={"add-patient"}>
                             <ListItemIcon><HomeIcon /></ListItemIcon>

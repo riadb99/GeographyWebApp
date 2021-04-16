@@ -1,3 +1,10 @@
+/***************************************************************************************
+ *    Title: Material UI Component - Circular Progress
+ *    Author: Material UI
+ *    Availability: https://material-ui.com/components/progress/
+ *
+ ***************************************************************************************/
+
 import React from 'react';
 import { CircularProgress } from '@material-ui/core';
 

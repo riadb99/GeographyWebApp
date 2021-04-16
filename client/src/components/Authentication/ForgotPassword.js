@@ -1,21 +1,26 @@
-import React, {useState, useRef} from 'react';
+/***************************************************************************************
+ *    Title: Material UI Template code
+ *    Author: Material UI
+ *    Date: 03/24/2020
+ *    Availability: https://material-ui.com/getting-started/templates/
+ *
+ ***************************************************************************************/
+
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import EnhancedEncryptionTwoToneIcon from '@material-ui/icons/EnhancedEncryptionTwoTone';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {useAuth} from "../../contexts/AuthContext";
 import Alert from '@material-ui/lab/Alert';
 import Grow from '@material-ui/core/Grow';
-import ParticlesBg from 'particles-bg'
 import Switch from "@material-ui/core/Switch";
 import BgToggle from "../BgToggle";
 
@@ -41,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -73,7 +78,7 @@ export default function ForgotPassword() {
             await resetPassword(email)
             setMessage("Password reset link has been sent to your email.")
         } catch (e) {
-            if (e.code == "auth/invalid-email") {
+            if (e.code === "auth/invalid-email") {
                 setError("Email not found. Please sign up first.")
             } else {
                 setError("Failed to reset password.")
@@ -106,7 +111,7 @@ export default function ForgotPassword() {
                             />
                             Disable Animated Background
                             <Avatar className={classes.avatar}>
-                                <LockOutlinedIcon/>
+                                <EnhancedEncryptionTwoToneIcon/>
                             </Avatar>
                             <Typography component="h1" variant="h5">
                                 Password Reset

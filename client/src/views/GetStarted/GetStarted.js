@@ -1,13 +1,16 @@
+/***************************************************************************************
+ *    Title: Material UI Component - Button
+ *    Author: Material UI
+ *    Availability: https://material-ui.com/components/buttons/
+ *
+ ***************************************************************************************/
+
 import React from 'react';
 import './GetStarted.css';
 import {makeStyles} from "@material-ui/core/styles";
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Typography from '@material-ui/core/Typography';
 import {useHistory} from "react-router-dom";
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import {Card, CardActions, CardContent} from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -105,9 +108,6 @@ export default function GetStarted() {
     const classes = useStyles();
     const history = useHistory();
 
-    const onClick = () => {
-        console.log("Clicked")
-    }
     const image =
         {
             url: 'https://cdn.wallpapersafari.com/47/19/ItDEyO.jpg',
@@ -149,35 +149,6 @@ export default function GetStarted() {
                 <span className={classes.imageMarked}/>
             </Typography>
           </span>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography>
-                                        Lorem Ipsum
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography>
-                                        Lorem Ipsum
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={12} sm={4}>
-                            <Card>
-                                <CardContent>
-                                    <Typography>
-                                        Lorem Ipsum
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
                 </ButtonBase>
             </div>
         </div>

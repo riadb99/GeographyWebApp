@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import logo from '../../assets/logo.svg';
 import './Home.css';
 import MapChart from "../../components/Map/Map";
 import ReactTooltip from "react-tooltip";
@@ -13,6 +12,7 @@ function Home() {
             <header>
                 <MapChart setTooltipContent={setContent} />
                 <ReactTooltip>{content}</ReactTooltip>
+
             </header>
         </div>
     );

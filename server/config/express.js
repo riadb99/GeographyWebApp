@@ -4,7 +4,6 @@ const path = require('path'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     dataRouter = require('../routes/dataRoute'),
-    exampleRouter = require('../routes/examples.server.routes'),
     userRouter = require('../routes/userRoute'),
     quizRouter = require('../routes/quizRoute');
 
@@ -33,7 +32,6 @@ module.exports.init = () => {
 
     // add a router
     app.use('/api/country', dataRouter);
-    app.use('/api/example', exampleRouter);
     app.use('/api/user', userRouter);
     app.use('/api/quiz', quizRouter);
 

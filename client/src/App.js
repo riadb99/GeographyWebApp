@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {Route, Switch, Redirect} from 'react-router-dom';
 import Home from "./views/Home/Home";
 import NotFound from "./views/NotFound";
@@ -8,6 +8,7 @@ import Login from "./components/Authentication/Login";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
 import GetStarted from "./views/GetStarted/GetStarted";
 import Quizzes from "./views/Quizzes/Quizzes";
+import Leaderboards from "./views/Leaderboards/Leaderboards";
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
 				<Route exact path="/Quizzes" component={Quizzes} />
                 <Route exact path="/Signup" component={SignUp}/>
                 <Route exact path="/Login" component={Login}/>
+                <Route exact path="/Leaderboards" component={Leaderboards}/>
                 <Route exact path="/ForgotPassword" component={ForgotPassword}/>
                 <Route exact path="/">
                     <Redirect to="/GetStarted"/>
