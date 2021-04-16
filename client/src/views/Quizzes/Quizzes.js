@@ -2832,7 +2832,7 @@ function Quizzes() {
 			
 			{showScore && updateUserScore() &&
 				<div>
-					<p>You scored {score} out of {numQuestionsAsked}</p>
+					<p>You scored {score * 10} out of {numQuestionsAsked * 10}</p>
 					<button class="quizButton" onClick={() => returnMenuClick()}> Return to Quiz Menu </button>
 					{wrongAnswerSet.length > 0 && 
 						<div>
