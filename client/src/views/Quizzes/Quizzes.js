@@ -9,6 +9,8 @@ import image1 from "./generalquizimage.jpg"
 import image2 from "./colorsybolquizimage.png"
 import image3 from "./flagquizimage.png"
 import image4 from "./greetingquizimage.png"
+import axios from "axios";
+import {useAuth} from "../../contexts/AuthContext";
 
 function Quizzes() {
 	//q1 = 49 questions, q3 = 111 questions, q2 = 50 questions, q4 = 49, q5 = 32
@@ -2657,7 +2659,7 @@ function Quizzes() {
 	var questions = questionSet;
 	const numQuestionsAsked = 10;
 	var wrongAnswers = wrongAnswerSet;
-	
+	const {currentUser} = useAuth();
 	
 	const handleAnswerOptionClick = (isCorrect, question, answer) => {
 		if (isCorrect) {
@@ -2680,6 +2682,20 @@ function Quizzes() {
 			setShowQuestions(false);
 		}
 	};
+
+	const updateUserScore = async () => {
+
+        axios.patch('/api/user/' + currentUser.email, {
+            highscore: score * 10
+        })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log("Error: " + error)
+            });
+
+    };
 	
 	const pickQuizClick = (name) => {
 		if(name == "generalE")
@@ -2735,7 +2751,7 @@ function Quizzes() {
 
 	
 	return (
-		<div>
+		<div className="Quiz">
 		<center>
 			
 			{showMenu &&
@@ -2814,7 +2830,7 @@ function Quizzes() {
 				</>
 			}
 			
-			{showScore &&
+			{showScore && updateUserScore() &&
 				<div>
 					<p>You scored {score} out of {numQuestionsAsked}</p>
 					<button class="quizButton" onClick={() => returnMenuClick()}> Return to Quiz Menu </button>
