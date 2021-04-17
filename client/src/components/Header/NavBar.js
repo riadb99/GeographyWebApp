@@ -20,6 +20,7 @@ import {useAuth} from "../../contexts/AuthContext";
 import axios from 'axios';
 import RenderFlag from '../FlagRenderer';
 import Leaderboards from '@material-ui/icons/FormatListNumbered';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import './NavBar.css'
 import CircularProgressRenderer from '../CircularProgressRenderer';
 import { useHistory } from 'react-router-dom';
@@ -225,6 +226,10 @@ export default function ButtonAppBar() {
                         <ListItem button onClick={()=> history.push("/Leaderboards")}>
                             <ListItemIcon><Leaderboards/></ListItemIcon>
                             <ListItemText primary="Leaderboards" />
+                        </ListItem>
+                        <ListItem button onClick={()=> history.push("/Quizzes")}>
+                            <ListItemIcon><SportsEsportsIcon/></ListItemIcon>
+                            <ListItemText primary="Quizzes" />
                         </ListItem>
                     </List>
                 </Drawer>

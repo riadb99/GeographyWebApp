@@ -3,6 +3,7 @@ const path = require('path'),
     mongoose = require('mongoose'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
+    cors = require('cors');
     dataRouter = require('../routes/dataRoute'),
     userRouter = require('../routes/userRoute'),
     quizRouter = require('../routes/quizRoute');
@@ -22,6 +23,9 @@ module.exports.init = () => {
 
     // initialize app
     const app = express();
+
+    //CORS
+    app.use(cors());
 
     // enable request logging for development debugging
     app.use(morgan('dev'));
