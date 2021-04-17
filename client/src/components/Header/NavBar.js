@@ -105,9 +105,9 @@ function SimpleDialog(props) {
             </div>
             &nbsp;
 
-            <div>
-                High Score: {props.highscore}
-            </div>
+            {/*<div>*/}
+            {/*    High Score: {props.highscore}*/}
+            {/*</div>*/}
             &nbsp;
         </Dialog>
     );
